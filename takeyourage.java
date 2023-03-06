@@ -7,8 +7,8 @@ class Hyper {
    public static final int TEST_NUM = 50;
    public static final int INPUTS   = 1;
    public static final int OUTPUTS  = 1;
-   public static final int HIDDENS  = 3;
-   public static final int GENSIZE  = 1000; // must be even
+   public static final int HIDDENS  = 10;
+   public static final int GENSIZE  = 100; // must be even
    public static final int GENEFLOW_ERS = 2;
    public static final int GENEFLOW_CHANCE = 1000;
    public static final int MAX_CALC = 50;
@@ -16,7 +16,7 @@ class Hyper {
    public static final int SIZECHANCE   = 10000;
    
    public static final double INFO_INTERVAL = 1; // in seconds
-   public static final double TARGET_FITNESS = 2.6;
+   public static final double TARGET_FITNESS = 1.5;
 }
 
 class rd {
