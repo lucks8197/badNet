@@ -11,7 +11,6 @@ class Hyper {
    public static final int GENSIZE  = 100; // must be even
    public static final int GENEFLOW_ERS = 2;
    public static final int GENEFLOW_CHANCE = 1000;
-   public static final int MAX_CALC = 50;
    public static final int MUTATECHANCE = 1000;
    public static final int SIZECHANCE   = 10000;
    
