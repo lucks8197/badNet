@@ -3,21 +3,6 @@ import java.util.Collections;
 import java.util.Scanner;
 import java.security.SecureRandom;
 
-class Hyper {
-   public static final int TEST_NUM = 50;
-   public static final int INPUTS   = 1;
-   public static final int OUTPUTS  = 1;
-   public static final int HIDDENS  = 10;
-   public static final int GENSIZE  = 100; // must be even
-   public static final int GENEFLOW_ERS = 2;
-   public static final int GENEFLOW_CHANCE = 1000;
-   public static final int MUTATECHANCE = 1000;
-   public static final int SIZECHANCE   = 10000;
-   
-   public static final double INFO_INTERVAL = 1; // in seconds
-   public static final double TARGET_FITNESS = 1.5;
-}
-
 class rd {
    public static final SecureRandom rand = new SecureRandom();
    public static final double random() {
@@ -53,10 +38,19 @@ public class takeyourage {
       Net n = ng.nets.get(0).net;
       
       while (true) {
-         System.out.println("Enter a number from -1 to 1:");
+         System.out.println("Give me your age: ");
          Scanner s = new Scanner(System.in);
-         double[] input = {s.nextDouble()};
-         System.out.println(n.calculate(input)[0]);
+         int age = (int)s.nextDouble();
+         String binaryAge = Integer.toBinaryString(age);
+         while (binaryAge.length() < 8) binaryAge = "0"+binaryAge;
+         if (binaryAge.length() > 8) continue;
+         //System.out.println(binaryAge);
+         double[] input = new double[8];
+         for (int i=0; i<8; i++) {
+            if (binaryAge.charAt(i) == '0') input[i] = -1;
+            else if (binaryAge.charAt(i) == '1') input[i] = 1;
+         }
+         System.out.println(Hyper.parseCalculate(n.calculate(input)));
       }
    }
    
@@ -139,10 +133,19 @@ class FitNet implements Comparable {
       // generate (TEST_NUM) test input sets
       double[][] tests = new double[Hyper.TEST_NUM][Hyper.INPUTS];
       for (int i=0; i<tests.length; i++) {
-         tests[i] = new double[Hyper.INPUTS];
-         for (int k=0; k<tests[i].length; k++) {
-            tests[i][k] = (2*i-(double)Hyper.TEST_NUM)/Hyper.TEST_NUM;
-         }  
+               
+         int testnumber = (int)(((double)Hyper.TEST_NUM-i)/Hyper.TEST_NUM*100);
+         
+         String binaryAge = Integer.toBinaryString(testnumber);
+         while (binaryAge.length() < 8) binaryAge = "0"+binaryAge;
+         if (binaryAge.length() > 8) continue;
+         double[] input = new double[8];
+         for (int k=0; k<8; k++) {
+            if (binaryAge.charAt(k) == '0') input[k] = -1;
+            else if (binaryAge.charAt(k) == '1') input[k] = 1;
+         }
+         
+         tests[i] = input;
       }
       
       // override
@@ -150,8 +153,9 @@ class FitNet implements Comparable {
       
       // calculate each test
       for (double[] input: tests) {
-         double output = net.calculate(input)[0];
-         fitness += Math.abs(input[0]-output);
+         int inputi  = Hyper.parseCalculate(input);
+         int output = Hyper.parseCalculate(net.calculate(input));
+         fitness += Math.abs(inputi-output);
       }
             
    }
