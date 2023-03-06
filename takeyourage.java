@@ -18,10 +18,11 @@ public class takeyourage {
       // cross your fingers everyone
       Generation g;
       Generation ng = new Generation();
-      double bestFitness = 256;
+      double bestFitness = 1000;
       
       long currentTime = System.currentTimeMillis();
       long iterations  = 0;
+      System.out.println("targetfitness = "+Hyper.TARGET_FITNESS);
       while (bestFitness > Hyper.TARGET_FITNESS) {
          g = ng;
          ng = new Generation(g);
