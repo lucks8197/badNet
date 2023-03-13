@@ -16,6 +16,8 @@ public class takeyourage {
       // make a neural network that learns to do nothing
       
       // cross your fingers everyone
+      
+      
       Generation g;
       Generation ng = new Generation();
       double bestFitness = 1000;
@@ -29,6 +31,7 @@ public class takeyourage {
          bestFitness = ng.nets.get(0).fitness;
          iterations++;
          if (-currentTime + System.currentTimeMillis() >= Hyper.INFO_INTERVAL*1000) {
+            System.out.println(ng.nets);
             System.out.println("best = "+bestFitness);
             System.out.println("iter = "+iterations+"\n");
             currentTime = System.currentTimeMillis();
@@ -117,7 +120,7 @@ class Generation {
 
 
 class FitNet implements Comparable {
-   Net net;
+   final Net net;
    double fitness;
    boolean scored;
    
@@ -128,14 +131,25 @@ class FitNet implements Comparable {
    }
    
    public void score() {
-      if (scored) 
-         return;
+      if (scored) {
+         //int newscore = score2();
+         //if (newscore != fitness) System.out.println("ERROR");
+      }
       
+      else fitness = score2();
+        
+   }
+   
+   public int score2() {
+      int scoreoutput = 0;
       // generate (TEST_NUM) test input sets
       double[][] tests = new double[Hyper.TEST_NUM][Hyper.INPUTS];
       for (int i=0; i<tests.length; i++) {
                
          int testnumber = (int)(((double)Hyper.TEST_NUM-i)/Hyper.TEST_NUM*100);
+         
+         testnumber += (int)(rd.random()*5-2);
+         
          String binaryAge = Integer.toBinaryString(testnumber);
          // System.out.println(binaryAge);
          while (binaryAge.length() < 8) binaryAge = "0"+binaryAge;
@@ -156,9 +170,9 @@ class FitNet implements Comparable {
       for (double[] input: tests) {
          int inputi  = Hyper.parseCalculate(input);
          int output = Hyper.parseCalculate(net.calculate(input));
-         fitness += Math.abs(inputi-output);
+         scoreoutput += Math.abs(inputi-output);
       }
-            
+      return scoreoutput;
    }
    
    @Override
@@ -177,7 +191,7 @@ class FitNet implements Comparable {
 
 
 
-class Net {
+class Net { 
    ArrayList<Connection> cons;
    ArrayList<Node> nodes;
    int inputs;

@@ -1,7 +1,7 @@
 public class Hyper {
    public static final int TEST_NUM = 50;
    public static final int INPUTS   = 8;
-   public static final int HIDDENS  = 8;
+   public static final int HIDDENS  = 0;
    public static final int OUTPUTS  = 8;
    
    public static final boolean LAYERED = false;
