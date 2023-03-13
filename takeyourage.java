@@ -51,7 +51,7 @@ public class takeyourage {
             if (binaryAge.charAt(i) == '0') input[i] = -1;
             else if (binaryAge.charAt(i) == '1') input[i] = 1;
          }
-         System.out.println(Hyper.parseCalculate(n.calculate(input)));
+         // System.out.println(Hyper.parseCalculate(n.calculate(input)));
       }
    }
    
@@ -136,8 +136,8 @@ class FitNet implements Comparable {
       for (int i=0; i<tests.length; i++) {
                
          int testnumber = (int)(((double)Hyper.TEST_NUM-i)/Hyper.TEST_NUM*100);
-         
          String binaryAge = Integer.toBinaryString(testnumber);
+         // System.out.println(binaryAge);
          while (binaryAge.length() < 8) binaryAge = "0"+binaryAge;
          if (binaryAge.length() > 8) continue;
          double[] input = new double[8];
